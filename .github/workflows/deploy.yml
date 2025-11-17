@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - dev
+      - feat_deploy
   workflow_dispatch:
 
   
@@ -47,6 +48,16 @@ jobs:
           git checkout dev
           echo "Building dev branch output..."
           pnpm build --outDir dist/dev
+
+      - name: Build feat_deploy branch
+        run: |
+          git fetch origin feat_deploy
+          git checkout feat_deploy
+          echo "Building feat_deploy branch output..."
+          pnpm build --outDir dist/feat_deploy
+
+      - name: Prepare Pages bundle
+        run: |
           touch dist/.nojekyll
 
       - name: Upload build output
